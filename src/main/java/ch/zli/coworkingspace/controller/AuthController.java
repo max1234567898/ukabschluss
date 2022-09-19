@@ -58,12 +58,12 @@ public class AuthController {
 
         switch (grantType) {
             case "password" -> {
-                val optionalMember = memberRepository.findByUsername(username);
+                val optionalMember = memberRepository.findByEmail(username);
                 if (optionalMember.isEmpty()) {
                     throw new IllegalArgumentException("Username or password wrong");
                 }
 
-                if (!BCrypt.checkpw(password, optionalMember.get().getPasswordHash())) {
+                if (!BCrypt.checkpw(password, optionalMember.get().getPassword())) {
                     throw new IllegalArgumentException("Username or password wrong");
                 }
 
@@ -72,11 +72,11 @@ public class AuthController {
                 val id = UUID.randomUUID().toString();
                 val scopes = new ArrayList<String>();
 
-                if (member.getIsAdmin()) {
+                if (member.getIs_admin()) {
                     scopes.add("ADMIN");
                 }
 
-                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getUsername(), scopes);
+                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getEmail(), scopes);
                 val newRefreshToken = jwtService.createNewJWTRefresh(id, member.getId().toString());
 
                 return new TokenResponse(newAccessToken, newRefreshToken, "Bearer", LocalDateTime.now().plusDays(14).toEpochSecond(ZoneOffset.UTC), LocalDateTime.now().plusDays(1).toEpochSecond(ZoneOffset.UTC));
@@ -94,11 +94,11 @@ public class AuthController {
                 val id = UUID.randomUUID().toString();
                 val scopes = new ArrayList<String>();
 
-                if (member.getIsAdmin()) {
+                if (member.getIs_admin()) {
                     scopes.add("ADMIN");
                 }
 
-                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getUsername(), scopes);
+                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getEmail(), scopes);
                 val newRefreshToken = jwtService.createNewJWTRefresh(id, member.getId().toString());
 
                 return new TokenResponse(newAccessToken, newRefreshToken, "Bearer", LocalDateTime.now().plusDays(14).toEpochSecond(ZoneOffset.UTC), LocalDateTime.now().plusDays(1).toEpochSecond(ZoneOffset.UTC));
@@ -114,17 +114,23 @@ public class AuthController {
     )
     @PostMapping(value = "/register", produces = "application/json")
     public TokenResponse register(
-            @Parameter(description = "Username / E-Mail", required = true)
-            @RequestParam(name = "username", required = true)
-            String username,
+            @Parameter(description = "E-Mail", required = true)
+            @RequestParam(name = "email", required = true)
+            String email,
             @Parameter(description = "Password", required = true)
             @RequestParam(name = "password", required = true)
-            String password
+            String password,
+            @Parameter(description = "firstname", required = true)
+            @RequestParam(name = "firstname", required = true)
+            String firstname,
+            @Parameter(description = "lastname", required = true)
+            @RequestParam(name = "lastname", required = true)
+            String lastname
     ) throws GeneralSecurityException, IOException {
         String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-        val newMember = new MemberEntity(UUID.randomUUID(), username, passwordHash, false);
+        val newMember = new MemberEntity(UUID.randomUUID(),firstname,lastname, email, passwordHash, false);
         memberRepository.save(newMember);
 
-        return getToken("password", "", username, password);
+        return getToken("password", "", email, password);
     }
 }
