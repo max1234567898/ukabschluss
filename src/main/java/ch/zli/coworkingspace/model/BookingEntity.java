@@ -10,15 +10,17 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity(name = "CATEGORY")
-public class CategoryEntity implements Serializable {
+@Entity(name = "BOOKING")
+public class BookingEntity implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -27,19 +29,23 @@ public class CategoryEntity implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     UUID id = UUID.randomUUID();
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "startDate", nullable = false)
+    private Timestamp startDate;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        CategoryEntity gameEntity = (CategoryEntity) o;
-        return id != null && Objects.equals(id, gameEntity.id);
-    }
+    @Column(name = "endDate", nullable = false)
+    private Timestamp endDate;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+    @Column(name = "is_accepted", nullable = false)
+    private Boolean is_accepted;
+
+    @ManyToOne
+    private MemberEntity memberEntity;
+
+    @ManyToOne
+    private PlaceEntity placeEntity;
+
+
+
+
+
 }
