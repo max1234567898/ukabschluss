@@ -28,27 +28,31 @@ public class MemberEntity implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     UUID id = UUID.randomUUID();
 
-    @Column(name = "username", nullable = false)
-    String username;
+    @Column(name = "firstname", nullable = false)
+    String firstname;
 
-    @Column(name = "password_hash", nullable = false)
-    String passwordHash;
+    @Column(name = "lastname", nullable = false)
+    String lastname;
 
-    @Column(name = "is_admin", nullable = false)
-    Boolean isAdmin = false;
+    @Column(name = "email", nullable = false)
+    String email;
+
+    @Column(name= "password", nullable = false)
+    String password;
+
+    @Column(name= "is_admin", nullable = false)
+    Boolean is_admin;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         MemberEntity that = (MemberEntity) o;
-        return id != null && Objects.equals(id, that.id) &&
-                username != null && Objects.equals(username, that.username) &&
-                passwordHash != null && Objects.equals(passwordHash, that.passwordHash);
+        return id.equals(that.id) && firstname.equals(that.firstname) && lastname.equals(that.lastname) && email.equals(that.email) && password.equals(that.password) && is_admin.equals(that.is_admin);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, firstname, lastname, email, password, is_admin);
     }
 }
