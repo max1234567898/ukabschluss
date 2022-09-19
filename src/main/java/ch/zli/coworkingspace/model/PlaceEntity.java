@@ -19,8 +19,8 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity(name = "GAME")
-public class GameEntity implements Serializable {
+@Entity(name = "PLACE")
+public class PlaceEntity implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -29,29 +29,19 @@ public class GameEntity implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     UUID id = UUID.randomUUID();
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "category", nullable = false)
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
-    private CategoryEntity category;
-
-    @Transient
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Schema(accessMode = Schema.AccessMode.WRITE_ONLY)
-    private UUID categoryId;
+    @Column(name = "location", nullable = false)
+    private String location;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        GameEntity gameEntity = (GameEntity) o;
-        return id != null && Objects.equals(id, gameEntity.id);
+        if (o == null || getClass() != o.getClass()) return false;
+        PlaceEntity that = (PlaceEntity) o;
+        return id.equals(that.id) && location.equals(that.location);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, location);
     }
 }
