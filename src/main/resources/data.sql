@@ -1,12 +1,11 @@
-INSERT INTO CATEGORY (id, name)
-VALUES ('4be5f5bf-8eb5-44ea-8eb5-a5e807856d09', 'Battle Royale'),
-       ('e1eec954-6ef4-4926-8183-7575af189f2a', 'MMO RPG'),
-       ('692fa28c-fafd-442b-8022-4ed792995053', 'MOBA');
+INSERT INTO MEMBER (id, firstname, lastname, email, password, is_admin)
+VALUES ('9135f12e-1b66-4ee6-bbae-df37303cc154', 'Leon', 'Muster','Leon123@muster.ch','leon123', true);
 
-INSERT INTO GAME (id, name, category)
-VALUES ('413e2297-b84b-42ef-97ed-16a8a9d1d671', 'APEX Legends', '4be5f5bf-8eb5-44ea-8eb5-a5e807856d09'),
-       ('b8160463-01a0-4c7a-bd46-5b3716dbe4c6', 'Guild Wars 2', 'e1eec954-6ef4-4926-8183-7575af189f2a'),
-       ('3c13c533-fbac-4881-b94d-f95cb2ef16c8', 'League of Legends', '692fa28c-fafd-442b-8022-4ed792995053');
+INSERT INTO PLACE (id, location)
+VALUES ('4be5f5bf-8eb5-44ea-8eb5-a5e807856d09', 'Tisch 1'),
+       ('e1eec954-6ef4-4926-8183-7575af189f2a', 'Meetingraum 1');
 
-INSERT INTO MEMBER (id, username, password_hash, is_admin)
-VALUES ('9135f12e-1b66-4ee6-bbae-df37303cc154', 'admin', '$2a$10$aDD6I9Ej5.W8busvlsdPx.JvMWyJX8cOeOfVb.3q73KH2swww/N9C', true);
+INSERT INTO BOOKING (id, startDate, endDate, is_accepted, member_id, place_id)
+VALUES ('413e2297-b84b-42ef-97ed-16a8a9d1d671', '2012-09-17 18:47:52.069','2012-09-18 18:47:52.069',true,'9135f12e-1b66-4ee6-bbae-df37303cc154', '4be5f5bf-8eb5-44ea-8eb5-a5e807856d09'),
+       ('b8160463-01a0-4c7a-bd46-5b3716dbe4c6', '2012-08-17 18:47:52.069','2012-08-18 18:47:52.069',false,'9135f12e-1b66-4ee6-bbae-df37303cc154', 'e1eec954-6ef4-4926-8183-7575af189f2a');
+
