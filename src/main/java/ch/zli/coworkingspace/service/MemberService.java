@@ -1,9 +1,12 @@
 package ch.zli.coworkingspace.service;
 
+import ch.zli.coworkingspace.exception.GameNotFoundException;
 import ch.zli.coworkingspace.model.MemberEntity;
 import ch.zli.coworkingspace.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,26 +22,33 @@ public class MemberService {
         this.repository = repository;
     }
 
+    @Transactional
     public List<MemberEntity> loadAll() {
         log.info("Executing find all games ...");
         return repository.findAll();
     }
 
+    @Transactional
     public Optional<MemberEntity> loadOne(UUID gameId) {
         log.info("Executing find game with id " + gameId + " ...");
         return repository.findById(gameId);
     }
 
+    @Transactional
     public MemberEntity create(MemberEntity member) {
         log.info("Executing create game with id " + member.getId() + " ...");
         return repository.save(member);
     }
 
+    @Transactional
     public MemberEntity update(MemberEntity member) {
         log.info("Executing update game with id " + member.getId() + " ...");
+        val memberId = member.getId();
+        repository.findById(memberId).orElseThrow(() -> new GameNotFoundException("Member not found with id " + memberId));
         return repository.save(member);
     }
 
+    @Transactional
     public void delete(UUID memberId) {
         log.info("Executing delete game with id " + memberId + " ...");
         repository.deleteById(memberId);
