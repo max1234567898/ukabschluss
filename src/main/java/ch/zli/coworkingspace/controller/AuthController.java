@@ -1,11 +1,10 @@
 package ch.zli.coworkingspace.controller;
-
-import ch.zli.coworkingspace.repository.MemberRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import ch.zli.coworkingspace.model.MemberEntity;
 import ch.zli.coworkingspace.model.TokenResponse;
+import ch.zli.coworkingspace.repository.MemberRepository;
 import ch.zli.coworkingspace.security.JwtServiceHMAC;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +57,12 @@ public class AuthController {
 
         switch (grantType) {
             case "password" -> {
-                val optionalMember = memberRepository.findByEmail(username);
+                val optionalMember = memberRepository.findByUsername(username);
                 if (optionalMember.isEmpty()) {
                     throw new IllegalArgumentException("Username or password wrong");
                 }
 
-                if (!BCrypt.checkpw(password, optionalMember.get().getPassword())) {
+                if (!BCrypt.checkpw(password, optionalMember.get().getPasswordHash())) {
                     throw new IllegalArgumentException("Username or password wrong");
                 }
 
@@ -72,11 +71,11 @@ public class AuthController {
                 val id = UUID.randomUUID().toString();
                 val scopes = new ArrayList<String>();
 
-                if (member.getIs_admin()) {
+                if (member.getIsAdmin()) {
                     scopes.add("ADMIN");
                 }
 
-                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getEmail(), scopes);
+                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getUsername(), scopes);
                 val newRefreshToken = jwtService.createNewJWTRefresh(id, member.getId().toString());
 
                 return new TokenResponse(newAccessToken, newRefreshToken, "Bearer", LocalDateTime.now().plusDays(14).toEpochSecond(ZoneOffset.UTC), LocalDateTime.now().plusDays(1).toEpochSecond(ZoneOffset.UTC));
@@ -94,11 +93,11 @@ public class AuthController {
                 val id = UUID.randomUUID().toString();
                 val scopes = new ArrayList<String>();
 
-                if (member.getIs_admin()) {
+                if (member.getIsAdmin()) {
                     scopes.add("ADMIN");
                 }
 
-                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getEmail(), scopes);
+                val newAccessToken = jwtService.createNewJWT(id, member.getId().toString(), member.getUsername(), scopes);
                 val newRefreshToken = jwtService.createNewJWTRefresh(id, member.getId().toString());
 
                 return new TokenResponse(newAccessToken, newRefreshToken, "Bearer", LocalDateTime.now().plusDays(14).toEpochSecond(ZoneOffset.UTC), LocalDateTime.now().plusDays(1).toEpochSecond(ZoneOffset.UTC));
@@ -114,9 +113,9 @@ public class AuthController {
     )
     @PostMapping(value = "/register", produces = "application/json")
     public TokenResponse register(
-            @Parameter(description = "E-Mail", required = true)
-            @RequestParam(name = "email", required = true)
-            String email,
+            @Parameter(description = "Username / E-Mail", required = true)
+            @RequestParam(name = "username", required = true)
+            String username,
             @Parameter(description = "Password", required = true)
             @RequestParam(name = "password", required = true)
             String password,
@@ -128,9 +127,9 @@ public class AuthController {
             String lastname
     ) throws GeneralSecurityException, IOException {
         String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-        val newMember = new MemberEntity(UUID.randomUUID(),firstname,lastname, email, passwordHash, false);
+        val newMember = new MemberEntity(UUID.randomUUID(), firstname, lastname, username, passwordHash, false);
         memberRepository.save(newMember);
 
-        return getToken("password", "", email, password);
+        return getToken("password", "", username, password);
     }
 }

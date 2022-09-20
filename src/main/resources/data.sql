@@ -1,5 +1,5 @@
-INSERT INTO MEMBER (id, firstname, lastname, email, password, is_admin)
-VALUES ('9135f12e-1b66-4ee6-bbae-df37303cc154', 'Leon', 'Muster','Leon123@muster.ch','leon123', true);
+INSERT INTO MEMBER (id, firstname, lastname, username, password_hash, is_admin)
+VALUES ('9135f12e-1b66-4ee6-bbae-df37303cc154', 'Leon', 'Muster','admin','$2a$10$aDD6I9Ej5.W8busvlsdPx.JvMWyJX8cOeOfVb.3q73KH2swww/N9C', true);
 
 INSERT INTO PLACE (id, location)
 VALUES ('4be5f5bf-8eb5-44ea-8eb5-a5e807856d09', 'Tisch 1'),

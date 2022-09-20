@@ -34,25 +34,27 @@ public class MemberEntity implements Serializable {
     @Column(name = "lastname", nullable = false)
     String lastname;
 
-    @Column(name = "email", nullable = false)
-    String email;
+    @Column(name = "username", nullable = false)
+    String username;
 
-    @Column(name= "password", nullable = false)
-    String password;
+    @Column(name= "password_hash", nullable = false)
+    String passwordHash;
 
     @Column(name= "is_admin", nullable = false)
-    Boolean is_admin;
+    Boolean isAdmin;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         MemberEntity that = (MemberEntity) o;
-        return id.equals(that.id) && firstname.equals(that.firstname) && lastname.equals(that.lastname) && email.equals(that.email) && password.equals(that.password) && is_admin.equals(that.is_admin);
+        return id != null && Objects.equals(id, that.id) &&
+                username != null && Objects.equals(username, that.username) &&
+                passwordHash != null && Objects.equals(passwordHash, that.passwordHash);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, email, password, is_admin);
+        return getClass().hashCode();
     }
 }

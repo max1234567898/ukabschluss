@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface MemberRepository extends CrudRepository<MemberEntity, UUID> {
-    Optional<MemberEntity> findByEmail(String email);
+    Optional<MemberEntity> findByUsername(String username);
 
     List<MemberEntity> findAll();
 

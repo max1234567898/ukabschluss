@@ -14,7 +14,7 @@ public class OpenApiConfig {
     @Bean
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
-                .packagesToScan("io.viascom.springbootcrudexample.controller")
+                .packagesToScan("ch.zli.coworkingspace.controller")
                 .group("crud-api")
                 .build();
     }
