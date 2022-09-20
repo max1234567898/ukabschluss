@@ -4,15 +4,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -29,23 +26,22 @@ public class BookingEntity implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     UUID id = UUID.randomUUID();
 
-    @Column(name = "startDate", nullable = false)
+    @Column(name = "start_date", nullable = false)
     private Timestamp startDate;
 
-    @Column(name = "endDate", nullable = false)
+    @Column(name = "end_date", nullable = false)
     private Timestamp endDate;
 
     @Column(name = "is_accepted", nullable = false)
     private Boolean is_accepted;
 
     @ManyToOne
+    @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
     @ManyToOne
+    @JoinColumn(name = "place_id")
     private PlaceEntity placeEntity;
-
-
-
 
 
 }

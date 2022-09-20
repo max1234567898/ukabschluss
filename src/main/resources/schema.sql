@@ -1,12 +1,12 @@
 DROP TABLE IF EXISTS MEMBER CASCADE;
 CREATE TABLE MEMBER
 (
-    id        UUID,
-    firstname VARCHAR(200) NOT NULL,
-    lastname  VARCHAR(200) NOT NULL,
+    id            UUID,
+    firstname     VARCHAR(200)  NOT NULL,
+    lastname      VARCHAR(200)  NOT NULL,
     username      VARCHAR(2000) NOT NULL,
     password_hash VARCHAR(2000) NOT NULL,
-    is_admin  BOOLEAN      NOT NULL DEFAULT FALSE,
+    is_admin      BOOLEAN       NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id)
 );
 
@@ -22,8 +22,8 @@ DROP TABLE IF EXISTS BOOKING CASCADE;
 CREATE TABLE BOOKING
 (
     id          UUID,
-    startDate   TIMESTAMP NOT NULL,
-    endDate     TIMESTAMP NOT NULL,
+    start_date  TIMESTAMP NOT NULL,
+    end_date    TIMESTAMP NOT NULL,
     is_accepted BOOLEAN   NOT NULL DEFAULT FALSE,
     member_id   UUID,
     place_id    UUID,
