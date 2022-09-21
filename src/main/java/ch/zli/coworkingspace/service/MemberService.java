@@ -24,25 +24,25 @@ public class MemberService {
 
     @Transactional
     public List<MemberEntity> loadAll() {
-        log.info("Executing find all games ...");
+        log.info("Executing find all members ...");
         return repository.findAll();
     }
 
     @Transactional
     public Optional<MemberEntity> loadOne(UUID gameId) {
-        log.info("Executing find game with id " + gameId + " ...");
+        log.info("Executing find member with id " + gameId + " ...");
         return repository.findById(gameId);
     }
 
     @Transactional
     public MemberEntity create(MemberEntity member) {
-        log.info("Executing create game with id " + member.getId() + " ...");
+        log.info("Executing create member with id " + member.getId() + " ...");
         return repository.save(member);
     }
 
     @Transactional
     public MemberEntity update(MemberEntity member) {
-        log.info("Executing update game with id " + member.getId() + " ...");
+        log.info("Executing update member with id " + member.getId() + " ...");
         val memberId = member.getId();
         repository.findById(memberId).orElseThrow(() -> new GameNotFoundException("Member not found with id " + memberId));
         return repository.save(member);
@@ -50,7 +50,7 @@ public class MemberService {
 
     @Transactional
     public void delete(UUID memberId) {
-        log.info("Executing delete game with id " + memberId + " ...");
+        log.info("Executing delete member with id " + memberId + " ...");
         repository.deleteById(memberId);
     }
 }

@@ -24,25 +24,25 @@ public class BookingService {
 
     @Transactional
     public List<BookingEntity> loadAll() {
-        log.info("Executing find all games ...");
+        log.info("Executing find all bookings ...");
         return repository.findAll();
     }
 
     @Transactional
     public Optional<BookingEntity> loadOne(UUID gameId) {
-        log.info("Executing find game with id " + gameId + " ...");
+        log.info("Executing find booking with id " + gameId + " ...");
         return repository.findById(gameId);
     }
 
     @Transactional
     public BookingEntity create(BookingEntity booking) {
-        log.info("Executing create game with id " + booking.getId() + " ...");
+        log.info("Executing create booking with id " + booking.getId() + " ...");
         return repository.save(booking);
     }
 
     @Transactional
     public BookingEntity update(BookingEntity booking) {
-        log.info("Executing update game with id " + booking.getId() + " ...");
+        log.info("Executing update booking with id " + booking.getId() + " ...");
         val bookingId = booking.getId();
         repository.findById(bookingId).orElseThrow(() -> new GameNotFoundException("Booking not found with id " + bookingId));
         return repository.save(booking);
@@ -50,7 +50,7 @@ public class BookingService {
 
     @Transactional
     public void delete(UUID bookingId) {
-        log.info("Executing delete game with id " + bookingId + " ...");
+        log.info("Executing delete booking with id " + bookingId + " ...");
         repository.deleteById(bookingId);
     }
 
