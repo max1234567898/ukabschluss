@@ -1,8 +1,7 @@
 package ch.zli.coworkingspace.controller;
 
-import ch.zli.coworkingspace.exception.GameNotFoundException;
+import ch.zli.coworkingspace.exception.BookingNotFoundException;
 import ch.zli.coworkingspace.model.BookingEntity;
-import ch.zli.coworkingspace.model.MemberEntity;
 import ch.zli.coworkingspace.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -43,7 +42,7 @@ public class BookingController {
     @GetMapping("/{id}")
     BookingEntity loadOne(@PathVariable UUID id) {
         return bookingService.loadOne(id)
-                .orElseThrow(() -> new GameNotFoundException("Booking with id " + id + " not found!"));
+                .orElseThrow(() -> new BookingNotFoundException("Booking with id " + id + " not found!"));
     }
 
     @Operation(

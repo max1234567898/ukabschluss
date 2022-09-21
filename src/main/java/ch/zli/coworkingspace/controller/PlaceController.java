@@ -1,11 +1,10 @@
 package ch.zli.coworkingspace.controller;
 
-import ch.zli.coworkingspace.exception.GameNotFoundException;
+import ch.zli.coworkingspace.exception.BookingNotFoundException;
 import ch.zli.coworkingspace.model.PlaceEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import ch.zli.coworkingspace.model.BookingEntity;
 import ch.zli.coworkingspace.service.PlaceService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,7 @@ public class PlaceController {
     @GetMapping("/{id}")
     PlaceEntity loadOne(@PathVariable UUID id) {
         return placeService.loadOne(id)
-                .orElseThrow(() -> new GameNotFoundException("Place with id " + id + " not found!"));
+                .orElseThrow(() -> new BookingNotFoundException("Place with id " + id + " not found!"));
     }
 
     @Operation(

@@ -1,6 +1,6 @@
 package ch.zli.coworkingspace.service;
 
-import ch.zli.coworkingspace.exception.GameNotFoundException;
+import ch.zli.coworkingspace.exception.BookingNotFoundException;
 import ch.zli.coworkingspace.model.MemberEntity;
 import ch.zli.coworkingspace.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class MemberService {
     public MemberEntity update(MemberEntity member) {
         log.info("Executing update member with id " + member.getId() + " ...");
         val memberId = member.getId();
-        repository.findById(memberId).orElseThrow(() -> new GameNotFoundException("Member not found with id " + memberId));
+        repository.findById(memberId).orElseThrow(() -> new BookingNotFoundException("Member not found with id " + memberId));
         return repository.save(member);
     }
 
