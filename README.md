@@ -3,6 +3,8 @@
 API documentation: http://localhost:8080/swagger-ui/index.html
 (wichtig Link funktioniert nur wen die Applikation läuft)
 
+Git Repository: https://github.com/max1234567898/ukabschluss
+
 Wichtig! Bevor man das Projekt startet, muss man im application.yml die Data source url anpassen.
 Hier die Url die sie anpassen müssen:   
 datasource: <br>
