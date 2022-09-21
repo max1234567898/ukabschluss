@@ -22,19 +22,16 @@ public class BookingService {
         this.repository = repository;
     }
 
-    @Transactional
     public List<BookingEntity> loadAll() {
         log.info("Executing find all bookings ...");
         return repository.findAll();
     }
 
-    @Transactional
     public Optional<BookingEntity> loadOne(UUID gameId) {
         log.info("Executing find booking with id " + gameId + " ...");
         return repository.findById(gameId);
     }
 
-    @Transactional
     public BookingEntity create(BookingEntity booking) {
         log.info("Executing create booking with id " + booking.getId() + " ...");
         return repository.save(booking);
@@ -48,7 +45,6 @@ public class BookingService {
         return repository.save(booking);
     }
 
-    @Transactional
     public void delete(UUID bookingId) {
         log.info("Executing delete booking with id " + bookingId + " ...");
         repository.deleteById(bookingId);

@@ -22,19 +22,16 @@ public class PlaceService {
         this.repository = repository;
     }
 
-    @Transactional
     public List<PlaceEntity> loadAll() {
         log.info("Executing find all places ...");
         return repository.findAll();
     }
 
-    @Transactional
     public Optional<PlaceEntity> loadOne(UUID placeId) {
         log.info("Executing find place with id " + placeId + " ...");
         return repository.findById(placeId);
     }
 
-    @Transactional
     public PlaceEntity create(PlaceEntity place) {
         log.info("Executing create place with id " + place.getId() + " ...");
         return repository.save(place);
@@ -48,10 +45,8 @@ public class PlaceService {
         return repository.save(place);
     }
 
-    @Transactional
     public void delete(UUID gameId) {
         log.info("Executing delete place with id " + gameId + " ...");
         repository.deleteById(gameId);
     }
-
 }
