@@ -1,6 +1,6 @@
 //Places
 
-// Get all places
+// Get all Places
 GET http://localhost:8080/places
 Authorization: Bearer {{jwt}}
 
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 ###
 
-// Update one Specific place
+// Update one Specific Place
 PUT http://localhost:8080/places/4be5f5bf-8eb5-44ea-8eb5-a5e807856d09
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
