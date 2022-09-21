@@ -1,39 +1,157 @@
-// Get all games
-GET http://localhost:8080/games
+//Places
+
+// Get all places
+GET http://localhost:8080/places
 Authorization: Bearer {{jwt}}
 
 ###
 
-// Get one specific game
-GET http://localhost:8080/games/413e2297-b84b-42ef-97ed-16a8a9d1d671
+// Get one specific Place
+GET http://localhost:8080/places/4be5f5bf-8eb5-44ea-8eb5-a5e807856d09
 Authorization: Bearer {{jwt}}
 
 ###
 
-// Create a new game
-POST http://localhost:8080/games/
+// Create a new Place
+POST http://localhost:8080/places
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
-  "name": "World of Warcraft",
-  "categoryId": "e1eec954-6ef4-4926-8183-7575af189f2a"
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "location": "string"
 }
-
 ###
 
-// Update one specific game
-PUT http://localhost:8080/games/413e2297-b84b-42ef-97ed-16a8a9d1d671
+// Update one Specific place
+PUT http://localhost:8080/places/4be5f5bf-8eb5-44ea-8eb5-a5e807856d09
 Authorization: Bearer {{jwt}}
+Content-Type: application/json
 
 {
-  "name": "World of Warcraft 2",
-  "categoryId": "e1eec954-6ef4-4926-8183-7575af189f2a"
+  "id": "4be5f5bf-8eb5-44ea-8eb5-a5e807856d09",
+  "location": "zh"
+}
+###
+
+// Delete one specific and existing Place
+DELETE http://localhost:8080/places/e1eec954-6ef4-4926-8183-7575af189f2b
+Authorization: Bearer {{jwt}}
+###
+
+//Member
+
+
+// Get all Members
+GET http://localhost:8080/members
+Authorization: Bearer {{jwt}}
+
+###
+
+// Get one specific Member
+GET http://localhost:8080/members/9135f11e-1b66-4ee6-bbae-df37303cc154
+Authorization: Bearer {{jwt}}
+
+###
+
+// Create a new Member
+POST http://localhost:8080/members
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "firstname": "string",
+  "lastname": "string",
+  "username": "string",
+  "passwordHash": "string",
+  "isAdmin": false
+}
+###
+
+// Update one Specific Member
+PUT http://localhost:8080/members/9135f11e-1b66-4ee6-bbae-df37303cc154
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "id": "9135f11e-1b66-4ee6-bbae-df37303cc154",
+  "location": "zh",
+  "firstname": "Max",
+  "lastname": "LL",
+  "username": "test",
+  "passwordHash": "string",
+  "isAdmin": false
+}
+###
+
+// Delete one specific and existing Member
+DELETE http://localhost:8080/members/9135f11e-1b66-4ee6-bbae-df37303cc154
+Authorization: Bearer {{jwt}}
+###
+
+
+//Booking
+
+// Get all bookings
+
+GET http://localhost:8080/bookings
+Authorization: Bearer {{jwt}}
+
+###
+
+// Get one specific booking
+GET http://localhost:8080/bookings/413e2297-b84b-42ef-97ed-16a8a9d1d671
+Authorization: Bearer {{jwt}}
+
+###
+
+// Create a new booking
+POST http://localhost:8080/bookings/
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "startDate": "2022-09-21T06:22:27.084Z",
+  "endDate": "2022-09-21T06:22:27.084Z",
+  "is_accepted": true,
+  "member_id": "9135f11e-1b66-4ee6-bbae-df37303cc154",
+  "place_id": "e1eec954-6ef4-4926-8183-7575af189f2b"
 }
 
 ###
 
-// Delete one specific and existing game
-DELETE http://localhost:8080/games/413e2297-b84b-42ef-97ed-16a8a9d1d671
+// Update one specific booking
+PUT http://localhost:8080/bookings/b8160463-01a0-4c7a-bd46-5b3716dbe4c6
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "id": "b8160463-01a0-4c7a-bd46-5b3716dbe4c6",
+  "startDate": "2022-09-21T06:22:27.084Z",
+  "endDate": "2022-10-21T06:22:27.084Z",
+  "is_accepted": false,
+  "member_id": "9135f12e-1b66-4ee6-bbae-df37303cc154",
+  "place_id": "4be5f5bf-8eb5-44ea-8eb5-a5e807856d09"
+}
+
+###
+
+// Delete one specific and existing Booking
+DELETE http://localhost:8080/bookings/b8160463-01a0-4c7a-bd46-5b3716dbe4c6
 Authorization: Bearer {{jwt}}
 
+###
+
+//Authorization
+
+// Renew Auth-Token
+POST http://localhost:8080/auth/token?grant_type=password&username=mitglied&password=password1234
+Authorization: Bearer {{jwt}}
+###
+
+// Register new User
+POST http://localhost:8080/auth/register?username=test1&password=passwort1234&firstname=mmm&lastname=lll
+Authorization: Bearer {{jwt}}
+###
